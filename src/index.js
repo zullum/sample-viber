@@ -91,7 +91,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
 bot.onTextMessage(/./, (message, response) => {
   // checkUrlAvailability(response, message.text);
-  response.send(new TextMessage(`Message received. How are you?`));
+  response.send(new TextMessage(`Message received. Djesi Hide sta te boli?`));
 });
 
 if (process.env.NOW_URL || process.env.HEROKU_URL) {
