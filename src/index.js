@@ -2,7 +2,10 @@
 
 const ViberBot = require("viber-bot").Bot;
 const BotEvents = require("viber-bot").Events;
-const TextMessage = require("viber-bot").Message.Text;
+
+const say = require("viber-response").say;
+const processResponse = require("viber-response").processResponse;
+
 require("dotenv").config();
 
 const winston = require("winston");
@@ -18,44 +21,6 @@ function createLogger() {
 
   logger.add(winston.transports.Console, toYAML.config());
   return logger;
-}
-
-function say(response, message) {
-  response.send(new TextMessage(message));
-}
-
-function checkUrlAvailability(botResponse, urlToCheck) {
-  if (urlToCheck === "") {
-    say(botResponse, "I need a URL to check");
-    return;
-  }
-
-  say(botResponse, "One second...Let me check!");
-
-  var url = urlToCheck.replace(/^http:\/\//, "");
-  request("http://isup.me/" + url, function (error, requestResponse, body) {
-    if (error || requestResponse.statusCode !== 200) {
-      say(botResponse, "Something is wrong with isup.me.");
-      return;
-    }
-
-    if (!error && requestResponse.statusCode === 200) {
-      if (body.search("is up") !== -1) {
-        say(botResponse, "Hooray! " + urlToCheck + ". looks good to me.");
-      } else if (body.search("Huh") !== -1) {
-        say(
-          botResponse,
-          "Hmmmmm " +
-            urlToCheck +
-            ". does not look like a website to me. Typo? please follow the format `test.com`"
-        );
-      } else if (body.search("down from here") !== -1) {
-        say(botResponse, "Oh no! " + urlToCheck + ". is broken.");
-      } else {
-        say(botResponse, "Snap...Something is wrong with isup.me.");
-      }
-    }
-  });
 }
 
 const logger = createLogger();
@@ -89,9 +54,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   }
 });
 
-bot.onTextMessage(/./, (message, response) => {
+bot.onTextMessage(/./, (message, botResponse) => {
   // checkUrlAvailability(response, message.text);
-  response.send(new TextMessage(`Message received. Djesi Hide sta te boli?`));
+  // response.send(new TextMessage(`Message received. Djesi Hide sta te boli?`));
+  processResponse(botResponse, message.text);
 });
 
 if (process.env.NOW_URL || process.env.HEROKU_URL) {
