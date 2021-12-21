@@ -58,6 +58,7 @@ bot.onTextMessage(/./, (message, botResponse) => {
   // checkUrlAvailability(response, message.text);
   // response.send(new TextMessage(`Message received. Djesi Hide sta te boli?`));
   processResponse(botResponse, message.text);
+  logger.debug(`message send from on text message line 61.`);
 });
 
 if (process.env.NOW_URL || process.env.HEROKU_URL) {
