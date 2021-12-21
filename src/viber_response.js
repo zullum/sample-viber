@@ -1,3 +1,5 @@
+"use strict";
+
 const TextMessage = require("viber-bot").Message.Text;
 const UrlMessage = require("viber-bot").Message.Url;
 const ContactMessage = require("viber-bot").Message.Contact;
@@ -9,11 +11,11 @@ const FileMessage = require("viber-bot").Message.File;
 const RichMediaMessage = require("viber-bot").Message.RichMedia;
 const KeyboardMessage = require("viber-bot").Message.Keyboard;
 
-function say(response, message) {
+const say = function say(response, message) {
   response.send(new TextMessage(message));
-}
+};
 
-function processResponse(botResponse, text_received) {
+const processResponse = function processResponse(botResponse, text_received) {
   let sender_name = botResponse.userProfile.name;
   let sender_id = botResponse.userProfile.id;
 
@@ -149,6 +151,7 @@ function processResponse(botResponse, text_received) {
 
   console.log(message);
   botResponse.send(message);
-}
+};
 
-module.exports = { say, processResponse };
+module.exports.say = say;
+module.exports.processResponse = processResponse;
