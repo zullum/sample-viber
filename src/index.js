@@ -3,8 +3,8 @@
 const ViberBot = require("viber-bot").Bot;
 const BotEvents = require("viber-bot").Events;
 
-const say = require("./viber-response").say;
-const processResponse = require("./viber-response").processResponse;
+const say = require("./viber_response").say;
+const processResponse = require("./viber_response").processResponse;
 
 require("dotenv").config();
 
