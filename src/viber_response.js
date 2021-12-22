@@ -34,7 +34,8 @@ const processResponse = function processResponse(botResponse, text_received) {
     // ================================
     // TextMessage object
     // ================================
-    message = new TextMessage("hello world text");
+    // message = new TextMessage("hello world text");
+    say(botResponse, "hello world text");
   } else if (text_received === "hi") {
     // ================================
     // Url Message object
@@ -149,8 +150,8 @@ const processResponse = function processResponse(botResponse, text_received) {
     message = new TextMessage("Hi!" + sender_name + " (" + sender_id + ")");
   }
 
-  console.log(message);
-  botResponse.send(message);
+  // console.log(message);
+  // botResponse.send(message);
 };
 
 module.exports.say = say;
