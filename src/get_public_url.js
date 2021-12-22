@@ -11,7 +11,7 @@ var options = {
   },
 };
 
-module.exports.getPublicUrl = function () {
+module.exports.getPublicUrl = async function () {
   return new Promise((resolve, reject) => {
     var req = http.request(options, function (res) {
       res.setEncoding("utf8");

@@ -3,6 +3,8 @@
 const ViberBot = require("viber-bot").Bot;
 const BotEvents = require("viber-bot").Events;
 
+// const TextMessage = require("viber-bot").Message.Text;
+
 const say = require("./viber_response").say;
 const processResponse = require("./viber_response").processResponse;
 
@@ -47,19 +49,20 @@ bot.onSubscribe((response) => {
   );
 });
 
-bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
-  // This sample bot can answer only text messages, let's make sure the user is aware of that.
-  if (!(message instanceof TextMessage)) {
-    say(response, `Sorry. I can only understand text messages.`);
-  }
-});
+// bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+//   // This sample bot can answer only text messages, let's make sure the user is aware of that.
+//   if (!(message instanceof TextMessage)) {
+//     say(response, `Sorry. I can only understand text messages.`);
+//   }
+// });
 
 bot.onTextMessage(/./, (message, botResponse) => {
   // checkUrlAvailability(response, message.text);
-  botResponse.send(
-    new TextMessage(`Message received. Djesi Hide sta te boli?`)
-  );
-  // processResponse(botResponse, message.text);
+  // botResponse.send(
+  //   new TextMessage(`Message received. Djesi Hide sta te boli?`)
+  // );
+  // say(botResponse, `hi to you too.`);
+  processResponse(botResponse, message.text);
   logger.debug(`message send from on text message line 61.`);
 });
 
@@ -76,12 +79,12 @@ if (process.env.NOW_URL || process.env.HEROKU_URL) {
   logger.debug(
     "Could not find the now.sh/Heroku environment variables. Trying to use the local ngrok server."
   );
+  const http = require("http");
+  const port = process.env.PORT || 8080;
   return ngrok
     .getPublicUrl()
     .then((publicUrl) => {
-      const http = require("http");
-      const port = process.env.PORT || 8080;
-
+      console.log('Set the new webhook to"', publicUrl);
       http
         .createServer(bot.middleware())
         .listen(port, () => bot.setWebhook(publicUrl));
@@ -89,6 +92,5 @@ if (process.env.NOW_URL || process.env.HEROKU_URL) {
     .catch((error) => {
       console.log("Can not connect to ngrok server. Is it running?");
       console.error(error);
-      process.exit(1);
     });
 }

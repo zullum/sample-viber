@@ -150,8 +150,8 @@ const processResponse = function processResponse(botResponse, text_received) {
     message = new TextMessage("Hi!" + sender_name + " (" + sender_id + ")");
   }
 
-  // console.log(message);
-  // botResponse.send(message);
+  console.log(message);
+  botResponse.send(message);
 };
 
 module.exports.say = say;
