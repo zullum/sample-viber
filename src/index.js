@@ -56,8 +56,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
 bot.onTextMessage(/./, (message, botResponse) => {
   // checkUrlAvailability(response, message.text);
-  // response.send(new TextMessage(`Message received. Djesi Hide sta te boli?`));
-  processResponse(botResponse, message.text);
+  botResponse.send(
+    new TextMessage(`Message received. Djesi Hide sta te boli?`)
+  );
+  // processResponse(botResponse, message.text);
   logger.debug(`message send from on text message line 61.`);
 });
 
